@@ -21,6 +21,7 @@ sup{font-size:.65em;vertical-align:super;}
 .section{padding-block:3rem;border-top:1px solid var(--border);}
 .band{background:var(--soft);}
 .band .page{padding-block:3rem;border-top:1px solid var(--border);}
+.sec-intro{font-size:.97rem;color:#444;line-height:1.8;max-width:42rem;margin:0 auto 1.75rem;text-align:center;}
 h2.sec-title{font-family:'Source Serif 4',Georgia,serif;font-size:1.75rem;font-weight:700;color:var(--blue);text-align:center;margin:0 0 1.75rem;letter-spacing:-.01em;text-wrap:balance;}
 .abstract p{margin:0 0 1rem;font-size:1rem;line-height:1.8;}
 .abstract p:last-child{margin:0;}
@@ -152,11 +153,16 @@ footer a:hover{text-decoration:underline;}
 <div class="band">
   <div class="page">
     <h2 class="sec-title">Software Architecture</h2>
-    <figure>
+    <p class="sec-intro">The system implements a fully decentralised per-drone stack where each UAV runs an identical set of ROS 2 nodes, communicating only through a shared knowledge base and peer-to-peer auction messages — no central planner required.</p>
+        <figure>
       <img src="figures/arch.png" alt="Per-drone software architecture">
-      <figcaption><strong>Fig. 1.</strong> Per-drone software stack, replicated identically across every vehicle. Purple boxes (Knowledge Base, Mission Monitor, Swarm Link, Auction Behavior, Trajectory Coord<section class="section">
+      <figcaption><strong>Fig. 1.</strong> Per-drone software stack, replicated identically across every vehicle. Purple boxes (Knowledge Base, Mission Monitor, Swarm Link, Auction Behavior, Trajectory Coordinator) implement the decentralized coordination layer; teal nodes are standard Aerostack2 motion and estimation components.</figcaption>
+    </figure>
+
+<section class="section">
   <h2 class="sec-title">Auction Message Flow</h2>
-  <div style="max-width:700px;margin:0 auto;">
+    <p class="sec-intro">When a drone fails mid-mission, the survivors re-auction its uncovered waypoints through a lightweight gossip protocol. The interactive diagram below walks through each phase of a two-drone auction round.</p>
+    <div style="max-width:700px;margin:0 auto;">
     <div>
       <div class="seq-ctrl">
         <button class="seq-btn" id="auc-prev">&#9664; Prev</button>
@@ -264,8 +270,6 @@ footer a:hover{text-decoration:underline;}
     </div>
   </div>
 </section>
-
-ock held. Drone 2 suspends its GoTo until drone 1's conflicting segment completes, then acquires the lock.</figcaption>
     </figure>
   </div>
 </section>
@@ -273,7 +277,8 @@ ock held. Drone 2 suspends its GoTo until drone 1's conflicting segment complete
 <div class="band">
   <div class="page">
     <h2 class="sec-title">Computational Efficiency</h2>
-    <figure>
+    <p class="sec-intro">Planning time scales linearly with arena size, staying below 200 ms for regions up to 600 m² — well within the latency budget of a reactive replanning loop.</p>
+        <figure>
       <img src="figures/efficiency.png" alt="Computation time vs arena size">
       <figcaption><strong>Fig. 3.</strong> Planning computation time vs. arena half-side for fleets of 2–5 drones. The parallel auction stays flat at 204–210 ms across all configurations; the centralized planner grows to 6.3 s at N = 5.</figcaption>
     </figure>
@@ -299,7 +304,8 @@ ock held. Drone 2 suspends its GoTo until drone 1's conflicting segment complete
 
 <section class="section">
   <h2 class="sec-title">Resilience Under Disruptions</h2>
-  <div class="tab-bar" role="tablist">
+    <p class="sec-intro">Four scenarios progressively stress the fleet: single drone failure, multi-drone failure, panel anomaly, and combined failure. Coverage utility is tracked over time across two to five UAVs.</p>
+    <div class="tab-bar" role="tablist">
     <button class="tab-btn active" data-tab="t-s1">S1 · Single drone</button>
     <button class="tab-btn"        data-tab="t-s2">S2 · Multi-drone</button>
     <button class="tab-btn"        data-tab="t-s3">S3 · Panel anomaly</button>
@@ -344,7 +350,8 @@ ock held. Drone 2 suspends its GoTo until drone 1's conflicting segment complete
 <div class="band">
   <div class="page">
     <h2 class="sec-title">Real-Hardware Validation</h2>
-    <p style="font-size:.78rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin:0 0 .75rem;">
+    <p class="sec-intro">A three-Crazyflie 2.1 swarm reproduces the re-auction protocol on physical hardware. The animation below is generated directly from rosbag data recorded during the flight.</p>
+        <p style="font-size:.78rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin:0 0 .75rem;">
       Top-down 2-D trajectory — replayed from OptiTrack rosbag · synchronized behavior timeline
     </p>
 
@@ -384,21 +391,7 @@ ock held. Drone 2 suspends its GoTo until drone 1's conflicting segment complete
   </div>
 </div>
 
-<section id="bibtex" class="section">
-  <h2 class="sec-title">BibTeX</h2>
-  <div class="bibtex">
-    <pre>@article{gplenza2026icdcpp,
-  title   = {Fault-Tolerant Multi-{UAV} Coverage through
-             Event-Driven Distributed Coordination},
-  author  = {GP-Lenza, Guillermo and Arias-Perez, Pedro and
-             Fernandez-Cortizas, Miguel and Molina, Mart{\'i}n
-             and Campoy, Pascual},
-  journal = {Intelligent Computing},
-  year    = {2026},
-  note    = {Under review}
-}</pre>
-  </div>
-</section>
+
 </div>
 
 <footer>
